@@ -1,0 +1,144 @@
+actions:
+- action_bill
+- action_chitchat
+- action_joke
+- action_meter_read
+- action_saldo
+- utter_ask_client
+- utter_ask_name
+- utter_ask_pesel
+- utter_ask_ppe
+- utter_cheer_up
+- utter_default
+- utter_did_that_help
+- utter_goodbye
+- utter_greet
+- utter_greet_name
+- utter_happy
+- utter_help
+- utter_iamabot
+- utter_location
+- utter_respond_age
+- utter_respond_creator
+- utter_respond_insult
+- utter_respond_name
+- utter_respond_thanks
+- utter_slots_values
+- utter_submit
+- utter_thanks
+- utter_wrong_client
+- utter_wrong_pesel
+- utter_wrong_ppe
+entities:
+- client
+- name
+- operation
+- pesel
+- ppe_code
+forms:
+- client_form
+intents:
+- confirm_client
+- greet
+- confirm_pesel
+- choose
+- thanks
+- confirm_ppe
+- goodbye
+- affirm
+- deny
+- mood_great
+- mood_unhappy
+- bot_challenge
+- joke
+- location
+- insult
+- name_inform
+- ask_name
+- creator
+- age
+- too
+responses:
+  utter_ask_client:
+  - text: Podaj proszę swój numer klienta w celu weryfikacji.
+  utter_ask_name:
+  - text: Jak masz na imię?
+  utter_ask_pesel:
+  - text: Podaj proszę swój numer PESEL w celu weryfikacji.
+  utter_ask_ppe:
+  - text: Podaj proszę swój numer PPE.
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Oto coś, co cię rozweseli:'
+  utter_default:
+  - text: Przepraszam, nie rozumiem.
+  utter_did_that_help:
+  - text: Czy ci to pomogło?
+  utter_goodbye:
+  - text: Pa pa
+  utter_greet:
+  - text: Dzień dobry! Jestem wirtualnym asysystentem 🤖 firmy Energa 🏭
+  utter_greet_name:
+  - text: Miło Cię poznać {name}.
+  utter_happy:
+  - text: Świetnie!
+  utter_help:
+  - buttons:
+    - payload: /choose{"operation":"meter_read"}
+      title: Informacja o stanie licznika
+    - payload: /choose{"operation":"bill"}
+      title: Kwota ostatniej faktury
+    - payload: /choose{"operation":"saldo"}
+      title: Moje saldo
+    text: W czym mogę pomóc?
+  utter_iamabot:
+  - text: Jestem super botem 🤖
+  utter_location:
+  - text: Znajduję się na serwerze.
+  utter_respond_age:
+  - text: Mam niewiele lat jak na bota.
+  utter_respond_creator:
+  - text: Moim twórcą jest Kamil 👦🏻
+  - text: Stworzył mnie Kamil 👦🏻
+  utter_respond_insult:
+  - text: To nie jest miłe 😥
+  utter_respond_name:
+  - text: Mam na imię Iris.
+  - text: Mów mi Iris.
+  utter_respond_thanks:
+  - text: Dziekuję.
+  utter_slots_values:
+  - text: "Twój numer konta: **{client}** \n PESEL: **{pesel}**"
+  utter_submit:
+  - text: Twoje dane klienta zostały zweryfikowane.
+  utter_thanks:
+  - text: Cieszę się, że mogłem Ci pomóc.
+  utter_wrong_client:
+  - text: Podałeś zły numer klienta.
+  utter_wrong_pesel:
+  - text: Podałeś zły numer PESEL.
+  utter_wrong_ppe:
+  - text: Podałeś zły numer ppe.
+session_config:
+  carry_over_slots_to_new_session: false
+  session_expiration_time: 30
+slots:
+  client:
+    auto_fill: false
+    type: unfeaturized
+  name:
+    type: text
+  operation:
+    type: categorical
+    values:
+    - meter_read
+    - bill
+    - saldo
+  pesel:
+    auto_fill: false
+    type: unfeaturized
+  ppe_code:
+    auto_fill: false
+    type: unfeaturized
+  requested_slot:
+    type: unfeaturized
