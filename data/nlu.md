@@ -5,10 +5,10 @@
 - jaka jest moja ostatnia [faktura]{"entity": "operation", "value": "bill"}?
 - ile wynosi moja ostatnia [faktura]{"entity": "operation", "value": "bill"}?
 - informacja o ostatniej [fakturze]{"entity": "operation", "value": "bill"}
-- ile wynosi moje [saldo](operation)?
-- jakie jest moje [saldo](operation)?
+- ile wynosi moje [saldo]{"entity": "operation", "value": "saldo"}?
+- jakie jest moje [saldo]{"entity": "operation", "value": "saldo"}?
 - informacja o [saldzie]{"entity": "operation", "value": "saldo"}
-- jaki jest stan mojego [salda](operation)?
+- jaki jest stan mojego [salda]{"entity": "operation", "value": "saldo"}?
 
 ## intent:confirm_client
 - mój numer klienta [21313127](client)
@@ -30,6 +30,7 @@
 - [77081668908](pesel) to mój pesel
 - mój numer PESEL to [50102231284](pesel)
 - numer PESEL [50102231284](pesel)
+- [50102231284](pesel)
 
 ## regex:pesel
 - [0-9]{11}
@@ -106,21 +107,6 @@
 - jesteś człowiekiem?
 - czy rozmawiam z botem?
 - czy rozmawiam z człowiekiem?
-
-## intent:joke
-- czy możesz opowiedzieć mi żart?
-- chciałbym usłyszeć żart
-- opowiedz mi dowcip
-- żart proszę
-- opowiedz mi żart
-- czy potrafisz opowiadać dowcipy?
-- muszę usłyszeć żart
-- czy możesz opowiedzieć mi kawał?
-- chciałbym usłyszeć kawał
-- opowiedz mi kawał
-- kawał proszę
-- czy potrafisz opowiadać kawały?
-- muszę usłyszeć kawał
 
 ## intent:location
 - gdzie jesteś?

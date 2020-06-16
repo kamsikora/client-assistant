@@ -41,7 +41,18 @@ class ClientForm(FormAction):
             or a list of them, where a first match will be picked"""
 
         return {
-            "client": self.from_entity(entity="client", not_intent="chitchat"),
+            "client": [
+                self.from_entity(
+                    entity="client",
+                    intent="confirm_client"
+                ),
+            ],
+            "pesel": [
+                self.from_entity(
+                    entity="pesel",
+                    intent="confirm_pesel"
+                ),
+            ],
         }
 
     @staticmethod
@@ -118,10 +129,12 @@ class ActionMeterRead(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Twój ostatni odczyt z dnia **{}** wyniósł: **{}** kWh".format((date.today() - timedelta(14)).strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
-        dispatcher.utter_message(template='utter_help')
-        return []
+        if tracker.get_slot("client") != None and tracker.get_slot("pesel") != None:
+            dispatcher.utter_message(text="Twój ostatni odczyt z dnia **{}** wyniósł: **{}** kWh".format((date.today() - timedelta(14)).strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
+            dispatcher.utter_message(template='utter_help')
+            return []
+        else:
+            dispatcher.utter_message(template='utter_default')
 
 class ActionBill(Action):
 
@@ -134,10 +147,12 @@ class ActionBill(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-
-        dispatcher.utter_message(text="Twoja ostatnia faktura z dnia **{}** wyniosła: **{}** PLN ".format((date.today() - timedelta(14)).strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
-        dispatcher.utter_message(template='utter_help')
-        return []
+        if tracker.get_slot("client") != None and tracker.get_slot("pesel") != None:
+            dispatcher.utter_message(text="Twoja ostatnia faktura z dnia **{}** wyniosła: **{}** PLN ".format((date.today() - timedelta(14)).strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
+            dispatcher.utter_message(template='utter_help')
+            return []
+        else:
+            dispatcher.utter_message(template='utter_default')
 
 class ActionSaldo(Action):
 
@@ -150,31 +165,33 @@ class ActionSaldo(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
+        if tracker.get_slot("client") != None and tracker.get_slot("pesel") != None:
+            dispatcher.utter_message(text="Twoje obecne saldo na dzień **{}** wynosi: **{}** PLN".format(date.today().strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
+            dispatcher.utter_message(template='utter_help')
+            return []
+        else:
+            dispatcher.utter_message(template='utter_default')
 
-        dispatcher.utter_message(text="Twoje obecne saldo na dzień **{}** wynosi: **{}** PLN".format(date.today().strftime("%d-%m-%Y"), random.randint(100,1000)))  # send the message back to the user
-        dispatcher.utter_message(template='utter_help')
-        return []
+# class ActionChitchat(Action):
+#     """Returns the chitchat utterance dependent on the intent"""
 
-class ActionChitchat(Action):
-    """Returns the chitchat utterance dependent on the intent"""
+#     def name(self) -> Text:
+#         """Unique identifier of the action"""
 
-    def name(self) -> Text:
-        """Unique identifier of the action"""
+#         return "action_chitchat"
 
-        return "action_chitchat"
+#     def run(self,
+#             dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List:
 
-    def run(self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List:
+#         intent = tracker.latest_message['intent'].get('name')
 
-        intent = tracker.latest_message['intent'].get('name')
+#         # retrieve the correct chitchat utterance dependent on the intent
+#         if intent in ['ask_builder', 'ask_weather', 'ask_howdoing',
+#                       'ask_howold', 'ask_languagesbot', 'ask_restaurant',
+#                       'ask_time', 'ask_wherefrom', 'ask_whoami',
+#                       'handleinsult', 'telljoke', 'ask_whatismyname']:
+#             dispatcher.utter_template('utter_' + intent, tracker)
 
-        # retrieve the correct chitchat utterance dependent on the intent
-        if intent in ['ask_builder', 'ask_weather', 'ask_howdoing',
-                      'ask_howold', 'ask_languagesbot', 'ask_restaurant',
-                      'ask_time', 'ask_wherefrom', 'ask_whoami',
-                      'handleinsult', 'telljoke', 'ask_whatismyname']:
-            dispatcher.utter_template('utter_' + intent, tracker)
-
-        return []
+#         return []
